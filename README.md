@@ -6,5 +6,10 @@ This application allows a customized search of properties and / or management co
 - .NET Core (Backend)
 - Angular (Frontend)
 - Data format (JSON)
-- 
+
+# Software requirements
+
+# Software architecture
+
+
 
