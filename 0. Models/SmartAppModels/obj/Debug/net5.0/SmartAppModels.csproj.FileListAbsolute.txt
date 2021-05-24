@@ -1,0 +1,12 @@
+C:\KAREN\PROJECTS\SMART_APARTMENT_DATA\SmartApp\SmartAppSearch\0. Models\SmartAppModels\bin\Debug\net5.0\SmartAppModels.deps.json
+C:\KAREN\PROJECTS\SMART_APARTMENT_DATA\SmartApp\SmartAppSearch\0. Models\SmartAppModels\bin\Debug\net5.0\SmartAppModels.dll
+C:\KAREN\PROJECTS\SMART_APARTMENT_DATA\SmartApp\SmartAppSearch\0. Models\SmartAppModels\bin\Debug\net5.0\ref\SmartAppModels.dll
+C:\KAREN\PROJECTS\SMART_APARTMENT_DATA\SmartApp\SmartAppSearch\0. Models\SmartAppModels\bin\Debug\net5.0\SmartAppModels.pdb
+C:\KAREN\PROJECTS\SMART_APARTMENT_DATA\SmartApp\SmartAppSearch\0. Models\SmartAppModels\obj\Debug\net5.0\SmartAppModels.csprojAssemblyReference.cache
+C:\KAREN\PROJECTS\SMART_APARTMENT_DATA\SmartApp\SmartAppSearch\0. Models\SmartAppModels\obj\Debug\net5.0\SmartAppModels.GeneratedMSBuildEditorConfig.editorconfig
+C:\KAREN\PROJECTS\SMART_APARTMENT_DATA\SmartApp\SmartAppSearch\0. Models\SmartAppModels\obj\Debug\net5.0\SmartAppModels.AssemblyInfoInputs.cache
+C:\KAREN\PROJECTS\SMART_APARTMENT_DATA\SmartApp\SmartAppSearch\0. Models\SmartAppModels\obj\Debug\net5.0\SmartAppModels.AssemblyInfo.cs
+C:\KAREN\PROJECTS\SMART_APARTMENT_DATA\SmartApp\SmartAppSearch\0. Models\SmartAppModels\obj\Debug\net5.0\SmartAppModels.csproj.CoreCompileInputs.cache
+C:\KAREN\PROJECTS\SMART_APARTMENT_DATA\SmartApp\SmartAppSearch\0. Models\SmartAppModels\obj\Debug\net5.0\SmartAppModels.dll
+C:\KAREN\PROJECTS\SMART_APARTMENT_DATA\SmartApp\SmartAppSearch\0. Models\SmartAppModels\obj\Debug\net5.0\ref\SmartAppModels.dll
+C:\KAREN\PROJECTS\SMART_APARTMENT_DATA\SmartApp\SmartAppSearch\0. Models\SmartAppModels\obj\Debug\net5.0\SmartAppModels.pdb
