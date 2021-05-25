@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SmartAppModels;
+using SmartAppService.Models;
 
 namespace SmartAppService.Controllers
 {
@@ -20,30 +21,35 @@ namespace SmartAppService.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// This REST service Api will return a list of markets organized by US state
+        /// </summary>
+        /// <returns>A list of markets per US state. Example: Markets in Georgia state => Atlanta, Augusta, etc.</returns>
         [HttpGet]
-        public SearchedItems Get()
+        [Route("Markets")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Market>))]
+        [ProducesResponseType(400)]
+        public IEnumerable<Market> Get()
         {
-            return searchResponse();        
+            return GetMarkets();
         }
 
-        //[HttpGet("searchAll/{searchPhase:alpha}/{param2:Guid}")]
-        [HttpGet("{searchPhase:alpha}")]
-        public SearchedItems Get(string searchPhase)
+        /// <summary>
+        /// This REST service Api will return a customized Management and/or Properties market search result from AWS ElasticSearch
+        /// </summary>
+        /// <param name="searchPhase">(Required) </param>
+        /// <param name="limit">(Default value = 25)</param>
+        /// <param name="market">(Optional). In case of not data, it assumes that the search is applied to the entire US</param>
+        /// <returns></returns>
+        [HttpGet]
+        [ProducesResponseType(200, Type = typeof(SearchedItems))]
+        [ProducesResponseType(400)]
+        public SearchedItems Get([FromQuery] SearchInputParams searchParams)
         {
+            (bool isValidationOk, string validationMessage) validationResult = searchParams.Validate();
+            _logger.LogInformation("Looking for search managements and/or properties..");
             return searchResponse();
         }
-
-        // [HttpGet("{searchPhase:string}")]
-        // public IEnumerable<Management> Get(string searchPhase)
-        // {
-        //     return null;        
-        // }
-
-        // [HttpGet("{searchPhase:string}")]
-        // public IEnumerable<Property> Get(string searchPhase)
-        // {
-        //     return null;        
-        // }
 
         //************ Temporary Private Methods ***************
         private SearchedItems searchResponse(){
@@ -57,7 +63,15 @@ namespace SmartAppService.Controllers
                     new Property(){ PropertyID = 85631, Name = "Riatta Ranch", FormerName = "", StreetAddress = "1111 Musken", City = "Abilene", Market = "Abilene", State = "TX"}                
                 }
             };            
-        }        
+        }
+
+        private IEnumerable<Market> GetMarkets(){
+            List<Market> listOfMarkets = new List<Market>(){ 
+                new Market(){ MarketStateCode = "CA", MarketState = "California", MarketsPerState = new string[]{"San Francisco"} },
+                new Market(){ MarketStateCode = "GA", MarketState = "Georgia", MarketsPerState = new string[]{"Atlanta"} }                
+             };
+             return listOfMarkets.ToArray();
+        }
 
     }
 }
