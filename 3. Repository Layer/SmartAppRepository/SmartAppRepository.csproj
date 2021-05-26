@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\0. Models\SmartAppModels\SmartAppModels.csproj" />
+    <ProjectReference Include="..\..\2. Data Access Layer\SmartAppDataAccess\SmartAppDataAccess.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+</Project>

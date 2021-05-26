@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SmartAppModels;
-using SmartAppService.Models;
+using SmartAppService.Interfaces;
+using SmartAppService.Validations;
 
 namespace SmartAppService.Controllers
 {
@@ -14,11 +15,13 @@ namespace SmartAppService.Controllers
     public class SearchController : ControllerBase
     {
         private readonly ILogger<SearchController> _logger;
+        private readonly ISearchValidator _searchValidator;
         static readonly string[] serviceScope = new string[] {"access_as_user"};
 
-        public SearchController(ILogger<SearchController> logger)
+        public SearchController(ILogger<SearchController> logger, ISearchValidator searchValidator)
         {
             _logger = logger;
+            _searchValidator = searchValidator;
         }
 
         /// <summary>
@@ -46,7 +49,7 @@ namespace SmartAppService.Controllers
         [ProducesResponseType(400)]
         public SearchedItems Get([FromQuery] SearchInputParams searchParams)
         {
-            (bool isValidationOk, string validationMessage) validationResult = searchParams.Validate();
+            (bool isValidationOk, string validationMessage) validationResult = _searchValidator.Validate<SearchInputParams>(searchParams);
             _logger.LogInformation("Looking for search managements and/or properties..");
             return searchResponse();
         }
