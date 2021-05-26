@@ -13,6 +13,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SmartAppService.Interfaces;
 using SmartAppService.Validations;
+using SmartAppRepository;
+using SmartAppRepository.Interfaces;
+using SmartAppDataAccess;
+using SmartAppDataAccess.Interfaces;
+using SmartAppDataAccess.Mocks;
 
 namespace SmartAppService
 {
@@ -35,6 +40,8 @@ namespace SmartAppService
             });
             //************ Customized DI ****************
             services.AddScoped<ISearchValidator, SearchValidator>();
+            services.AddScoped<ISearchRepository, SearchRepository>();
+            services.AddScoped<INoSQLSearchDataAccess, NoSQLSearchDataAccessMock>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

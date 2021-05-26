@@ -1,8 +1,8 @@
 using SmartAppModels;
 
-namespace SmartAppRepository.Interfaces
+namespace SmartAppDataAccess.Interfaces
 {
-    public interface ISearchRepository
+    public interface INoSQLSearchDataAccess
     {
         SearchedItems GetResultsFromSearch(SearchInputParams searchParams);
     }

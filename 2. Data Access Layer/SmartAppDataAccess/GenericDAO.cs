@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SmartAppDataAccess
 {
-    public class GenericDAO<Item> : IGenericDataAccess<Item> where Item : class
+    public class GenericDAO<Item> : IGenericDAO<Item> where Item : class
     {
         private Item _daoItem;          
 

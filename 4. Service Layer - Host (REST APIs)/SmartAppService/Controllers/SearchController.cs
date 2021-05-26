@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using SmartAppModels;
 using SmartAppService.Interfaces;
 using SmartAppService.Validations;
+using SmartAppRepository.Interfaces;
 
 namespace SmartAppService.Controllers
 {
@@ -16,12 +17,15 @@ namespace SmartAppService.Controllers
     {
         private readonly ILogger<SearchController> _logger;
         private readonly ISearchValidator _searchValidator;
+        private readonly ISearchRepository _searchRepository;
         static readonly string[] serviceScope = new string[] {"access_as_user"};
 
-        public SearchController(ILogger<SearchController> logger, ISearchValidator searchValidator)
+        public SearchController(ILogger<SearchController> logger, ISearchValidator searchValidator, 
+                                    ISearchRepository searchRepository)
         {
             _logger = logger;
             _searchValidator = searchValidator;
+            _searchRepository = searchRepository;
         }
 
         /// <summary>
@@ -40,32 +44,19 @@ namespace SmartAppService.Controllers
         /// <summary>
         /// This REST service Api will return a customized Management and/or Properties market search result from AWS ElasticSearch
         /// </summary>
-        /// <param name="searchPhase">(Required) </param>
-        /// <param name="limit">(Default value = 25)</param>
-        /// <param name="market">(Optional). In case of not data, it assumes that the search is applied to the entire US</param>
+        /// <param name="searchParams">Contains the following input queries for filtering: </param>
+        /// {searchPhase: string}   (Required) 
+        /// {limit: int}            (Default value = 25)
+        /// {market: string[]}      (Optional - If there's not data retrieved, searchs through all USA)
         /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(SearchedItems))]
         [ProducesResponseType(400)]
         public SearchedItems Get([FromQuery] SearchInputParams searchParams)
         {
+            _logger.LogInformation("Entering into managements and/or properties search..");       
             (bool isValidationOk, string validationMessage) validationResult = _searchValidator.Validate<SearchInputParams>(searchParams);
-            _logger.LogInformation("Looking for search managements and/or properties..");
-            return searchResponse();
-        }
-
-        //************ Temporary Private Methods ***************
-        private SearchedItems searchResponse(){
-            return new SearchedItems { 
-                ManagementsFound = new List<Management>(){ 
-                    new Management(){ MgmtID = 27918, Name = "Essex Property Trust AKA Essex Apartment Homes", Market = "San Francisco" },
-                    new Management(){ MgmtID = 24736, Name = "Privately Owned and Managed", Market = "San Francisco" }  
-                },
-                PropertiesFound = new List<Property>(){
-                    new Property(){ PropertyID = 85630, Name = "Curry Junction", FormerName = "", StreetAddress = "3549 Curry Lane", City = "Abilene", Market = "Abilene", State = "TX"},
-                    new Property(){ PropertyID = 85631, Name = "Riatta Ranch", FormerName = "", StreetAddress = "1111 Musken", City = "Abilene", Market = "Abilene", State = "TX"}                
-                }
-            };            
+            return _searchRepository.GetResultsFromSearch(searchParams);
         }
 
         private IEnumerable<Market> GetMarkets(){
