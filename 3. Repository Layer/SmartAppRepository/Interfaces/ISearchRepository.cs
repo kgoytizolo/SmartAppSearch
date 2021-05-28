@@ -1,9 +1,10 @@
 using SmartAppModels;
+using System.Threading.Tasks;
 
 namespace SmartAppRepository.Interfaces
 {
     public interface ISearchRepository
     {
-        SearchedItems GetResultsFromSearch(SearchInputParams searchParams);
+        Task<SearchedItems> GetResultsFromSearch(SearchInputParams searchParams);
     }
 }

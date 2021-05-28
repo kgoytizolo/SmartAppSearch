@@ -2,6 +2,7 @@ using SmartAppRepository.Interfaces;
 using SmartAppDataAccess.Interfaces;
 using SmartAppModels;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace SmartAppRepository
 {
@@ -15,9 +16,9 @@ namespace SmartAppRepository
             _noSQLSearchDataAccess = noSQLSearchDataAccess;
         }
 
-        public SearchedItems GetResultsFromSearch(SearchInputParams searchParams)
+        public Task<SearchedItems> GetResultsFromSearch(SearchInputParams searchParams)
         {
-            return _noSQLSearchDataAccess.GetResultsFromSearch(searchParams);
+            return Task.Run<SearchedItems>(() => _noSQLSearchDataAccess.GetResultsFromSearch(searchParams));
         }
 
     }

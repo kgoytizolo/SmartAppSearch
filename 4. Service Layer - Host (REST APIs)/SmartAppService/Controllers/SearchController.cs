@@ -43,6 +43,7 @@ namespace SmartAppService.Controllers
 
         /// <summary>
         /// This REST service Api will return a customized Management and/or Properties market search result from AWS ElasticSearch
+        /// Format: HTTP/1.1 GET https://[Server]/api/smartSearch?SearchPhase=Essex&Limit=20&Markets=
         /// </summary>
         /// <param name="searchParams">Contains the following input queries for filtering: </param>
         /// {searchPhase: string}   (Required) 
@@ -52,11 +53,11 @@ namespace SmartAppService.Controllers
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(SearchedItems))]
         [ProducesResponseType(400)]
-        public SearchedItems Get([FromQuery] SearchInputParams searchParams)
+        public async Task<SearchedItems> Get([FromQuery] SearchInputParams searchParams)
         {
             _logger.LogInformation("Entering into managements and/or properties search..");       
             (bool isValidationOk, string validationMessage) validationResult = _searchValidator.Validate<SearchInputParams>(searchParams);
-            return _searchRepository.GetResultsFromSearch(searchParams);
+            return await _searchRepository.GetResultsFromSearch(searchParams);
         }
 
         private IEnumerable<Market> GetMarkets(){
