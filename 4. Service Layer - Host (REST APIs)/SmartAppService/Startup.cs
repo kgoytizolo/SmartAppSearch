@@ -42,6 +42,7 @@ namespace SmartAppService
             services.AddScoped<ISearchValidator, SearchValidator>();
             services.AddScoped<ISearchRepository, SearchRepository>();
             services.AddScoped<INoSQLSearchDataAccess, NoSQLSearchDataAccessMock>();
+            services.AddSingleton(Configuration.GetSection("ElasticSearchCnxSettings").Get<ElasticSearchCnxSettings>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

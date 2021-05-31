@@ -1,12 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\..\0. Models\SmartAppModels\SmartAppModels.csproj"/>
+    <ProjectReference Include="..\..\0. Models\SmartAppModels\SmartAppModels.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NEST" Version="7.13.0"/>
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0"/>
+    <PackageReference Include="Elasticsearch.Net" Version="7.13.0" />
+    <PackageReference Include="NEST" Version="7.13.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
   </ItemGroup>
 </Project>
