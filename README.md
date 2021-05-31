@@ -1,5 +1,5 @@
 # SmartAppSearch
-This application allows a customized search of properties and / or management companies for a commercial real state business.
+This application allows a customized search of certain Elasticsearch resources by using a built-in full text search, filters and analyzers for an auto-complete search feature.
 
 # Technical features
 - AWS ElasticSearch
