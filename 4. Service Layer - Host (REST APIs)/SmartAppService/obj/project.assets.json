@@ -36,6 +36,31 @@
           "buildMultiTargeting/Microsoft.Extensions.ApiDescription.Server.targets": {}
         }
       },
+      "Microsoft.Extensions.Configuration/5.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Abstractions": "5.0.0",
+          "Microsoft.Extensions.Primitives": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Configuration.Abstractions/5.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll": {}
+        }
+      },
       "Microsoft.Extensions.DependencyInjection/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -196,11 +221,23 @@
           "lib/net5.0/System.Diagnostics.DiagnosticSource.dll": {}
         }
       },
+      "GenericErrorHandler/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/GenericErrorHandler.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/GenericErrorHandler.dll": {}
+        }
+      },
       "SmartAppDataAccess/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
           "Elasticsearch.Net": "7.13.0",
+          "GenericErrorHandler": "1.0.0",
+          "Microsoft.Extensions.Configuration": "5.0.0",
           "Microsoft.Extensions.Logging": "5.0.0",
           "NEST": "7.13.0",
           "SmartAppModels": "1.0.0"
@@ -226,6 +263,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
+          "GenericErrorHandler": "1.0.0",
           "Microsoft.Extensions.Logging": "5.0.0",
           "SmartAppDataAccess": "1.0.0",
           "SmartAppModels": "1.0.0"
@@ -356,6 +394,46 @@
         "tools/netcoreapp2.1/GetDocument.Insider.deps.json",
         "tools/netcoreapp2.1/GetDocument.Insider.dll",
         "tools/netcoreapp2.1/GetDocument.Insider.runtimeconfig.json"
+      ]
+    },
+    "Microsoft.Extensions.Configuration/5.0.0": {
+      "sha512": "LN322qEKHjuVEhhXueTUe7RNePooZmS8aGid5aK2woX3NPjSnONFyKUc6+JknOS6ce6h2tCLfKPTBXE3mN/6Ag==",
+      "type": "package",
+      "path": "microsoft.extensions.configuration/5.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/Microsoft.Extensions.Configuration.dll",
+        "lib/net461/Microsoft.Extensions.Configuration.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.Configuration.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.Configuration.xml",
+        "microsoft.extensions.configuration.5.0.0.nupkg.sha512",
+        "microsoft.extensions.configuration.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
+    "Microsoft.Extensions.Configuration.Abstractions/5.0.0": {
+      "sha512": "ETjSBHMp3OAZ4HxGQYpwyGsD8Sw5FegQXphi0rpoGMT74S4+I2mm7XJEswwn59XAaKOzC15oDSOWEE8SzDCd6Q==",
+      "type": "package",
+      "path": "microsoft.extensions.configuration.abstractions/5.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/Microsoft.Extensions.Configuration.Abstractions.dll",
+        "lib/net461/Microsoft.Extensions.Configuration.Abstractions.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.xml",
+        "microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
+        "microsoft.extensions.configuration.abstractions.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
       ]
     },
     "Microsoft.Extensions.DependencyInjection/5.0.0": {
@@ -646,6 +724,11 @@
         "version.txt"
       ]
     },
+    "GenericErrorHandler/1.0.0": {
+      "type": "project",
+      "path": "../../1. Complementary components/GenericErrorHandler/GenericErrorHandler.csproj",
+      "msbuildProject": "../../1. Complementary components/GenericErrorHandler/GenericErrorHandler.csproj"
+    },
     "SmartAppDataAccess/1.0.0": {
       "type": "project",
       "path": "../../2. Data Access Layer/SmartAppDataAccess/SmartAppDataAccess.csproj",
@@ -664,6 +747,7 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "GenericErrorHandler >= 1.0.0",
       "SmartAppDataAccess >= 1.0.0",
       "SmartAppModels >= 1.0.0",
       "SmartAppRepository >= 1.0.0",
@@ -707,6 +791,9 @@
           "projectReferences": {
             "C:\\KAREN\\PROJECTS\\SMART_APARTMENT_DATA\\SmartApp\\SmartAppSearch\\0. Models\\SmartAppModels\\SmartAppModels.csproj": {
               "projectPath": "C:\\KAREN\\PROJECTS\\SMART_APARTMENT_DATA\\SmartApp\\SmartAppSearch\\0. Models\\SmartAppModels\\SmartAppModels.csproj"
+            },
+            "C:\\KAREN\\PROJECTS\\SMART_APARTMENT_DATA\\SmartApp\\SmartAppSearch\\1. Complementary components\\GenericErrorHandler\\GenericErrorHandler.csproj": {
+              "projectPath": "C:\\KAREN\\PROJECTS\\SMART_APARTMENT_DATA\\SmartApp\\SmartAppSearch\\1. Complementary components\\GenericErrorHandler\\GenericErrorHandler.csproj"
             },
             "C:\\KAREN\\PROJECTS\\SMART_APARTMENT_DATA\\SmartApp\\SmartAppSearch\\2. Data Access Layer\\SmartAppDataAccess\\SmartAppDataAccess.csproj": {
               "projectPath": "C:\\KAREN\\PROJECTS\\SMART_APARTMENT_DATA\\SmartApp\\SmartAppSearch\\2. Data Access Layer\\SmartAppDataAccess\\SmartAppDataAccess.csproj"

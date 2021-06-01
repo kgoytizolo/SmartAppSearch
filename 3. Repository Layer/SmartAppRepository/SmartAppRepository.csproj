@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\..\0. Models\SmartAppModels\SmartAppModels.csproj"/>
+    <ProjectReference Include="..\..\1. Complementary components\GenericErrorHandler\GenericErrorHandler.csproj" />    
     <ProjectReference Include="..\..\2. Data Access Layer\SmartAppDataAccess\SmartAppDataAccess.csproj"/>
   </ItemGroup>
   <PropertyGroup>

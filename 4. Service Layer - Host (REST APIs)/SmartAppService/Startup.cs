@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SmartAppService.Interfaces;
 using SmartAppService.Validations;
@@ -17,7 +10,7 @@ using SmartAppRepository;
 using SmartAppRepository.Interfaces;
 using SmartAppDataAccess;
 using SmartAppDataAccess.Interfaces;
-using SmartAppDataAccess.Mocks;
+//using SmartAppDataAccess.Mocks;
 
 namespace SmartAppService
 {
@@ -41,7 +34,7 @@ namespace SmartAppService
             //************ Customized DI ****************
             services.AddScoped<ISearchValidator, SearchValidator>();
             services.AddScoped<ISearchRepository, SearchRepository>();
-            services.AddScoped<INoSQLSearchDataAccess, NoSQLSearchDataAccessMock>();
+            services.AddScoped<INoSQLSearchDataAccess, NoSQLSearchDataAccess>();
             services.AddSingleton(Configuration.GetSection("ElasticSearchCnxSettings").Get<ElasticSearchCnxSettings>());
         }
 

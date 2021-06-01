@@ -4,6 +4,8 @@ using Microsoft.Extensions.Logging;
 using SmartAppModels;
 using SmartAppService.Interfaces;
 using SmartAppRepository.Interfaces;
+using GenericErrorHandler;
+using Microsoft.AspNetCore.Http;
 
 namespace SmartAppService.Controllers
 {
@@ -36,11 +38,29 @@ namespace SmartAppService.Controllers
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(SearchedItems))]
         [ProducesResponseType(400)]
-        public async Task<SearchedItems> Get([FromQuery] SearchInputParams searchParams)
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]    
+        public async Task<IActionResult> Get([FromQuery] SearchInputParams searchParams)
         {
-            _logger.LogInformation("Entering into managements and/or properties search..");       
-            (bool isValidationOk, string validationMessage) validationResult = _searchValidator.Validate<SearchInputParams>(searchParams);
-            return await _searchRepository.GetResultsFromSearch(searchParams);
+            var serviceResponse = new GenericErrorResponse<SearchedItems>();
+            try{
+                _logger.LogInformation("Entering into managements and/or properties search..");
+                (bool isValidationOk, string validationMessage) validationResult = _searchValidator.Validate<SearchInputParams>(searchParams);
+                if(validationResult.isValidationOk){
+                    serviceResponse = await _searchRepository.GetResultsFromSearchWithResponse(searchParams);
+                    if(serviceResponse.ErrorId == 9999)     return NotFound(serviceResponse);      //Resource not found - 404
+                    return Ok(serviceResponse.ResponseItem);
+                }
+                else {
+                    serviceResponse.SetErrorInfo(9400, validationResult.validationMessage);
+                    return BadRequest(serviceResponse); 
+                }
+            }
+            catch(System.Exception e){
+                serviceResponse.SetErrorInfo(e.HResult, "Error during the call of this service. Please, try again");
+                return StatusCode(500, serviceResponse);
+            }
         }
+
     }
 }

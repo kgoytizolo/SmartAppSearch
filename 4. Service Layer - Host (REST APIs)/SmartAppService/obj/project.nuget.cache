@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "NlKm0ed3U/lwBbeaEacLeNslrpPTtwumYoJYseh3nofVzGhXZ5cqRHpYHR3g3BjgcRAWdQcAJJgHJo+OE6rNLA==",
+  "dgSpecHash": "Kx2k14f4PGRMBL9wh0HCw9Q7D86s/wXBYYM2T+SABUUBaSkRpwolsUaz6Io4/G5GOf35Jy9O/I2zFcxq59jgQw==",
   "success": true,
   "projectFilePath": "C:\\KAREN\\PROJECTS\\SMART_APARTMENT_DATA\\SmartApp\\SmartAppSearch\\4. Service Layer - Host (REST APIs)\\SmartAppService\\SmartAppService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Bunny\\.nuget\\packages\\elasticsearch.net\\7.13.0\\elasticsearch.net.7.13.0.nupkg.sha512",
     "C:\\Users\\Bunny\\.nuget\\packages\\microsoft.csharp\\4.6.0\\microsoft.csharp.4.6.0.nupkg.sha512",
     "C:\\Users\\Bunny\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\Bunny\\.nuget\\packages\\microsoft.extensions.configuration\\5.0.0\\microsoft.extensions.configuration.5.0.0.nupkg.sha512",
+    "C:\\Users\\Bunny\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\Bunny\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\5.0.0\\microsoft.extensions.dependencyinjection.5.0.0.nupkg.sha512",
     "C:\\Users\\Bunny\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\Bunny\\.nuget\\packages\\microsoft.extensions.logging\\5.0.0\\microsoft.extensions.logging.5.0.0.nupkg.sha512",

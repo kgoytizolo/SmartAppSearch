@@ -16,5 +16,8 @@ namespace SmartAppDataAccess
         public string PasswordCnx { get; set; }
         public string AccessKey { get; set; }
         public byte TimeOutInMinutes { get; set; }
+
+        public ElasticSearchCnxSettings(){} 
+
     }
 }

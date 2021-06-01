@@ -2,6 +2,7 @@ using SmartAppModels;
 using SmartAppDataAccess.Interfaces;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using GenericErrorHandler;
 
 namespace SmartAppDataAccess.Mocks
 {
@@ -26,5 +27,15 @@ namespace SmartAppDataAccess.Mocks
                 }
             }; 
         }
+
+        public GenericErrorResponse<SearchedItems> GetResultsFromSearchWithResponse(SearchInputParams searchParams)
+        {
+            return new GenericErrorResponse<SearchedItems>() { 
+                ResponseItem = GetResultsFromSearch(searchParams),
+                ErrorId = 0,
+                ErrorMessage = "OK"
+            };
+        }
+
     }
 }
