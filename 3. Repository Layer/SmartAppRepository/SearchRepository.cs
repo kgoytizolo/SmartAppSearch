@@ -17,11 +17,6 @@ namespace SmartAppRepository
             _noSQLSearchDataAccess = noSQLSearchDataAccess;
         }
 
-        public Task<SearchedItems> GetResultsFromSearch(SearchInputParams searchParams)
-        {
-            return Task.Run<SearchedItems>(() => _noSQLSearchDataAccess.GetResultsFromSearch(searchParams));
-        }
-
         public Task<GenericErrorResponse<SearchedItems>> GetResultsFromSearchWithResponse(SearchInputParams searchParams)
         {
             return Task.Run<GenericErrorResponse<SearchedItems>>(() => _noSQLSearchDataAccess.GetResultsFromSearchWithResponse(searchParams));

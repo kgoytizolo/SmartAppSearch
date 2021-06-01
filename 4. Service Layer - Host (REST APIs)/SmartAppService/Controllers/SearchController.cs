@@ -5,7 +5,6 @@ using SmartAppModels;
 using SmartAppService.Interfaces;
 using SmartAppRepository.Interfaces;
 using GenericErrorHandler;
-using Microsoft.AspNetCore.Http;
 
 namespace SmartAppService.Controllers
 {
@@ -48,17 +47,19 @@ namespace SmartAppService.Controllers
                 (bool isValidationOk, string validationMessage) validationResult = _searchValidator.Validate<SearchInputParams>(searchParams);
                 if(validationResult.isValidationOk){
                     serviceResponse = await _searchRepository.GetResultsFromSearchWithResponse(searchParams);
-                    if(serviceResponse.ErrorId == 9999)     return NotFound(serviceResponse);      //Resource not found - 404
-                    return Ok(serviceResponse.ResponseItem);
+                    if(serviceResponse.ErrorId == 9404)         return NotFound(serviceResponse);  //Resource not found - 404
+                    else if(serviceResponse.ErrorId == 9999 || serviceResponse.ErrorId == 9000)    
+                            return StatusCode(500, serviceResponse);                               //Internal Service Error - 500
+                    else return Ok(serviceResponse.ResponseItem);                                  //Response OK - 200
                 }
                 else {
                     serviceResponse.SetErrorInfo(9400, validationResult.validationMessage);
-                    return BadRequest(serviceResponse); 
+                    return BadRequest(serviceResponse);                                             //Bad request - 400
                 }
             }
             catch(System.Exception e){
                 serviceResponse.SetErrorInfo(e.HResult, "Error during the call of this service. Please, try again");
-                return StatusCode(500, serviceResponse);
+                return StatusCode(500, serviceResponse);                                            //Internal Service Error - 500
             }
         }
 

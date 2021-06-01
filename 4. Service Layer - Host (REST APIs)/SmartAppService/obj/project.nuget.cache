@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Kx2k14f4PGRMBL9wh0HCw9Q7D86s/wXBYYM2T+SABUUBaSkRpwolsUaz6Io4/G5GOf35Jy9O/I2zFcxq59jgQw==",
+  "dgSpecHash": "vfeNIiR5+lBXHR1pcKpI/irM4TrsXPSrFr2LjP31T50EK1Vb+m16/AOTk2VQtaW2VIs1nxqp2bpAwX347+ZW6g==",
   "success": true,
   "projectFilePath": "C:\\KAREN\\PROJECTS\\SMART_APARTMENT_DATA\\SmartApp\\SmartAppSearch\\4. Service Layer - Host (REST APIs)\\SmartAppService\\SmartAppService.csproj",
   "expectedPackageFiles": [
@@ -17,6 +17,7 @@
     "C:\\Users\\Bunny\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.0\\microsoft.extensions.primitives.5.0.0.nupkg.sha512",
     "C:\\Users\\Bunny\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\Bunny\\.nuget\\packages\\nest\\7.13.0\\nest.7.13.0.nupkg.sha512",
+    "C:\\Users\\Bunny\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\Bunny\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
     "C:\\Users\\Bunny\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.3\\swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
     "C:\\Users\\Bunny\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.6.3\\swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",

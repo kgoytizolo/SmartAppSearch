@@ -4,7 +4,7 @@ namespace SmartAppModels
 {
     public class SearchedItems
     {
-        public List<Management> ManagementsFound { get; set; }
-        public List<Property> PropertiesFound { get; set; }
+        public List<Managements> ManagementsFound { get; set; }
+        public List<Properties> PropertiesFound { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace SmartAppUnitTests
     public class SmartAppSearchClientTest
     {
         //Declare global variables here
-        const string mainServiceUrl = "https://localhost:5001/api/smartSearch";  
+        const string mainServiceUrl = "https://localhost:5001/api/smartSearch";
 
         [Test]
         public async Task GetSearchResultsForAllUSATestOK()
@@ -28,15 +28,15 @@ namespace SmartAppUnitTests
         private Task<SearchedItems> GetSearchResults(string request)  
         {
             return Task.Run<SearchedItems>(() => new SearchedItems { 
-                    ManagementsFound = new List<Management>(){ 
-                        new Management(){ MgmtID = 27918, Name = "Essex Property Trust AKA Essex Apartment Homes", Market = "San Francisco" },
-                        new Management(){ MgmtID = 24736, Name = "Privately Owned and Managed", Market = "San Francisco" }  
-                    },
-                    PropertiesFound = new List<Property>(){
-                        new Property(){ PropertyID = 85630, Name = "Curry Junction", FormerName = "", StreetAddress = "3549 Curry Lane", City = "Abilene", Market = "Abilene", State = "TX"},
-                        new Property(){ PropertyID = 85631, Name = "Riatta Ranch", FormerName = "", StreetAddress = "1111 Musken", City = "Abilene", Market = "Abilene", State = "TX"}                
-                    }
+                ManagementsFound = new List<Managements>(){ 
+                    new Managements(){ Mgmt = { MgmtID = 27918, Name = "Essex Property Trust AKA Essex Apartment Homes", Market = "San Francisco" } },
+                    new Managements(){ Mgmt = { MgmtID = 24736, Name = "Privately Owned and Managed", Market = "San Francisco" } } 
+                },
+                PropertiesFound = new List<SmartAppModels.Properties>(){
+                    new SmartAppModels.Properties(){ Property = new Property {PropertyID = 85630, Name = "Curry Junction", FormerName = "", StreetAddress = "3549 Curry Lane", City = "Abilene", Market = "Abilene", State = "TX"}},
+                    new SmartAppModels.Properties(){ Property = new Property {PropertyID = 85631, Name = "Riatta Ranch", FormerName = "", StreetAddress = "1111 Musken", City = "Abilene", Market = "Abilene", State = "TX"}}                 
                 }
+            }
             );
         }
 

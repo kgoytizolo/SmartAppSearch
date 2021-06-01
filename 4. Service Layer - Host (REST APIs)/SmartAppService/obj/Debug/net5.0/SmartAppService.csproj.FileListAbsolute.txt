@@ -37,3 +37,4 @@ C:\KAREN\PROJECTS\SMART_APARTMENT_DATA\SmartApp\SmartAppSearch\4. Service Layer 
 C:\KAREN\PROJECTS\SMART_APARTMENT_DATA\SmartApp\SmartAppSearch\4. Service Layer - Host (REST APIs)\SmartAppService\bin\Debug\net5.0\SmartAppDataAccess.pdb
 C:\KAREN\PROJECTS\SMART_APARTMENT_DATA\SmartApp\SmartAppSearch\4. Service Layer - Host (REST APIs)\SmartAppService\bin\Debug\net5.0\GenericErrorHandler.dll
 C:\KAREN\PROJECTS\SMART_APARTMENT_DATA\SmartApp\SmartAppSearch\4. Service Layer - Host (REST APIs)\SmartAppService\bin\Debug\net5.0\GenericErrorHandler.pdb
+C:\KAREN\PROJECTS\SMART_APARTMENT_DATA\SmartApp\SmartAppSearch\4. Service Layer - Host (REST APIs)\SmartAppService\bin\Debug\net5.0\Newtonsoft.Json.dll
