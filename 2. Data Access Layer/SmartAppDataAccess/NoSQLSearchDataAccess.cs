@@ -145,15 +145,28 @@ namespace SmartAppDataAccess
         }
 
         private ISearchResponse<SmartAppModels.Properties> GetSerializableSearchResponseForProperty(SearchInputParams searchParams){
+
+            var marketsFilter = new List<Func<QueryContainerDescriptor<SmartAppModels.Properties>, QueryContainer>>();
+
+            //marketsFilter.Add(fq => fq.Terms(t => t.Field( f => f.Property.Market).Terms(searchParams.Markets) ));
+            //marketsFilter.Add(f => f.Term(p => p.Property.Market, searchParams.Markets[0]));
+            if(searchParams.Markets.Any())
+                marketsFilter.Add(fq => fq.Terms(t => t.Field( f => f.Property.Market).Terms(searchParams.Markets) ));
+
             var searchResponse =  _elasticCnxNESTClient.Search<SmartAppModels.Properties>(s => s
                     .Index("property")
                     .TypedKeys(null)
                     .From(0)
                     .Size(searchParams.Limit)
                     .Query(q => q
-                        .Match(m => m
-                            .Field(f => f.Property.Name)
-                            .Query(searchParams.SearchPhase)
+                        .Bool(bq => bq
+                            .Must(mq => mq
+                                .Match(m => m
+                                    .Field(f => f.Property.Name)
+                                    .Query(searchParams.SearchPhase)
+                                )
+                            )
+                            .Filter(marketsFilter)
                         )
                     )
                 );
@@ -162,15 +175,26 @@ namespace SmartAppDataAccess
         }
 
         private ISearchResponse<Managements> GetSerializableSearchResponseForManagement(SearchInputParams searchParams){
+
+            var marketsFilter = new List<Func<QueryContainerDescriptor<SmartAppModels.Managements>, QueryContainer>>();
+
+            if(searchParams.Markets.Any())  
+                marketsFilter.Add(fq => fq.Terms(t => t.Field( f => f.Mgmt.Market).Terms(searchParams.Markets) ));
+
             var searchResponse = _elasticCnxNESTClient.Search<Managements>(s => s
                     .Index("management")
                     .TypedKeys(null)
                     .From(0)
                     .Size(searchParams.Limit)
                     .Query(q => q
-                        .Match(m => m
-                            .Field(f => f.Mgmt.Name)
-                            .Query(searchParams.SearchPhase)
+                        .Bool(bq => bq
+                            .Must(mq => mq
+                                .Match(m => m
+                                    .Field(f => f.Mgmt.Name)
+                                    .Query(searchParams.SearchPhase)
+                                )
+                            )
+                            .Filter(marketsFilter)
                         )
                     )
                 );
