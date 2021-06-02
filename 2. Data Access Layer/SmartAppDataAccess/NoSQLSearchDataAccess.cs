@@ -163,6 +163,7 @@ namespace SmartAppDataAccess
                             .Must(mq => mq
                                 .Match(m => m
                                     .Field(f => f.Property.Name)
+                                    .Field(F => F.Property.FormerName)
                                     .Query(searchParams.SearchPhase)
                                 )
                             )
