@@ -1,0 +1,53 @@
+Query instructions:
+-------------------
+
+0) If you have a Curl default setting from Powershell, the following error might occur:
+-------------------------------------------------------------------------------------
+Invoke-WebRequest : A parameter cannot be found that matches parameter name 'X'.
+At line:1 char:6
++ curl -X GET 'localhost:9200/_cat/indices?v&pretty'
++      ~~
+    + CategoryInfo          : InvalidArgument: (:) [Invoke-WebRequest], ParameterBindingException
+    + FullyQualifiedErrorId : NamedParameterNotFound,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+
+- To resolve it, remove alias from Powershell, then, execute again:
+-------------------------------------------------------------------
+- C:\> remove-item alias:\curl
+
+1) (For Powershell) Always verify your changes if management and properties indexes existed before. If they exists, delete them:
+   ------------------------------------------------------------------------------------------------------------
+- C:\> curl -X DELETE 'http://localhost:9200/property?pretty'
+- C:\> curl -X DELETE 'http://localhost:9200/management?pretty'
+- C:\> curl -X GET 'localhost:9200/_cat/indices?v&pretty'
+
+1) (For Windows CMD - Native CURL utility) Upload bulk data (from physical absolute path or via a remote JSON file) for both management and properties indexes existed before:
+   -----------------------------------------------------------------------------------------------------------------------------------
+- C:\> curl -XPOST "localhost:9200/property/_bulk" --data-binary @"C:\KAREN\PROJECTS\SMART_APARTMENT_DATA\Documents\property_tem_es.json" -H "Content-Type: application/json"
+- C:\> curl -XPOST "localhost:9200/management/_bulk" --data-binary @"C:\KAREN\PROJECTS\SMART_APARTMENT_DATA\Documents\management_tem_es.json" -H "Content-Type: application/json"
+
+- C:\> curl -XPOST "localhost:9200/property/_bulk" --data-binary "https://github.com/kgoytizolo/JsonRepos/blob/main/sas/property.json" -H "Content-Type: application/json"
+- C:\> curl -XPOST "localhost:9200/management/_bulk" --data-binary "https://github.com/kgoytizolo/JsonRepos/blob/main/sas/management.json" -H "Content-Type: application/json"
+
+C:\>curl -XPOST "localhost:9200/property/_bulk" --data-binary "https://github.com/kgoytizolo/JsonRepos/blob/main/sas/property.json" -H "Content-Type: application/json"
+{"error":{"root_cause":[{"type":"illegal_argument_exception","reason":"The bulk request must be terminated by a newline [\\n]"}],
+					     "type":"illegal_argument_exception","reason":"The bulk request must be terminated by a newline [\\n]"},"status":400}
+
+2) (For Powershell) Create your index, analizers and mapping:
+-------------------------------------------------------------
+-- PROPERTIES:
+- C:\> curl -X PUT 'localhost:9200/property?&pretty' -H 'Content-type: application/json' -d '{ ""settings"" : { ""analysis"" : { ""char_filter"" : { ""custom_char_filter"" : { ""type"" : ""mapping"", ""mappings"" : [ ""&=> and "", ""saint => St. "" ] } }, ""tokenizer"": { ""custom_tokenizer"": { ""type"": ""whitespace"", ""max_token_length"": 15 } }, ""filter"" : { ""custom_stop_words"" : { ""type"" : ""stop"", ""stopwords"" : [ ""_english_"", ""_spanish_"" ] }, ""custom_default_words"" : { ""type"" : ""stop"", ""ignore_case"" : true } }, ""analyzer"" : { ""default"" : { ""tokenizer"" : ""whitespace"", ""filter"" : [ ""custom_default_words"" ] }, ""market_scope_analyzer"" : { ""type"" : ""custom"", ""tokenizer"" : ""keyword"" }, ""search_phrase_analyzer"" : { ""type"" : ""custom"", ""char_filter"" : [ ""html_strip"", ""custom_char_filter"" ], ""tokenizer"" : ""custom_tokenizer"", ""filter"" : [ ""lowercase"", ""custom_stop_words"" ] } } } }, ""mappings"" : { ""properties"" : { ""property"" : { ""properties"" : { ""propertyID"" : { ""type"" : ""long"" }, ""name"" : { ""type"" : ""text"", ""analyzer"" : ""search_phrase_analyzer"" }, ""formerName"" : { ""type"" : ""text"", ""analyzer"" : ""search_phrase_analyzer"" }, ""streetAddress"" : { ""type"" : ""text"" }, ""city"" : { ""type"" : ""text"" }, ""market"" : { ""type"" : ""text"", ""analyzer"" : ""market_scope_analyzer"" }, ""state"" : { ""type"" : ""text"", ""analyzer"" : ""market_scope_analyzer"" }, ""lat"" : { ""type"" : ""float"" }, ""lng"" : { ""type"" : ""float"" } } } } } }'
+
+-- MANAGEMENT:
+- C:\> curl -X PUT 'localhost:9200/management?&pretty' -H 'Content-type: application/json' -d '{ ""settings"" : { ""analysis"" : { ""char_filter"" : { ""custom_char_filter"" : { ""type"" : ""mapping"", ""mappings"" : [ ""&=> and "", ""saint => St. "" ] } }, ""tokenizer"": { ""custom_tokenizer"": { ""type"": ""whitespace"", ""max_token_length"": 15 } }, ""filter"" : { ""custom_stop_words"" : { ""type"" : ""stop"", ""stopwords"" : [ ""_english_"", ""_spanish_"" ] }, ""custom_default_words"" : { ""type"" : ""stop"", ""ignore_case"" : true } }, ""analyzer"" : { ""default"" : { ""tokenizer"" : ""whitespace"", ""filter"" : [ ""custom_default_words"" ] }, ""market_scope_analyzer"" : { ""type"" : ""custom"", ""tokenizer"" : ""keyword"" }, ""search_phrase_analyzer"" : { ""type"" : ""custom"", ""char_filter"" : [ ""html_strip"", ""custom_char_filter"" ], ""tokenizer"" : ""custom_tokenizer"", ""filter"" : [ ""lowercase"", ""custom_stop_words"" ] } } } }, ""mappings"" : { ""properties"" : { ""mgmt"" : { ""properties"" : { ""mgmtID"" : { ""type"" : ""long"" }, ""name"" : { ""type"" : ""text"", ""analyzer"" : ""search_phrase_analyzer"" }, ""market"" : { ""type"" : ""text"", ""analyzer"" : ""market_scope_analyzer"" }, ""state"" : { ""type"" : ""text"", ""analyzer"" : ""market_scope_analyzer"" } } } } } }'
+
+3) (For Powershell) Verify if analyzers and mappings has been created successfully into properties and management indexes:
+--------------------------------------------------------------------------------------------------------------------------
+- C:\> curl -X GET 'localhost:9200/property,management/_settings?pretty'
+- C:\> curl -X GET 'localhost:9200/property,management/_mapping?pretty'
+
+4) (For Powershell) Verify if data for both indices has been uploaded successfully, as well as its current status:
+-------------------------------------------------------------------------------------------------
+- C:\> curl -X GET 'http://localhost:9200/property,management/_search?q=Essex&pretty'	
+- C:\> curl -X PUT -H 'Content-type: application/json' -d '{""property"":{""propertyID"":120117,""name"":""Stone Rocks apartments"",""formerName"":""Essex Heights"",""streetAddress"":""404 Encinitas Blvd"",""city"":""Encinitas"",""market"":""San Diego"",""state"":""CA"",""lat"":33.0484,""lng"":-117.2829}}' 'http://localhost:9200/property/_doc/KKGp4HkBZIWX6gCRDLgT?pretty'
+- C:\> curl -X GET 'http://localhost:9200/_cat/indices?v&pretty'
+

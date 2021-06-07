@@ -65,11 +65,10 @@ namespace SmartAppDataAccess
                     if(responseException == null)  response.ResponseItem = searchedResults;
                     else {
                         string errGenericMessage = "Error trying to obtain a search response from Elasticsearch property index.";
-                        LogErrorMessages(errGenericMessage, 
-                            responseException.HResult, responseException.Message ?? "", "", "");
+                        LogErrorMessages(errGenericMessage, responseException.HResult, responseException.Message ?? "", "", "");
                         response.SetErrorInfo(9000, $"Internal Server error:. Exception error: {errGenericMessage} ", "");
-                    }                    
-                }                   
+                    }
+                }                  
             }
             else {
                 _logger.LogError("Elastic Search connection is not available.");
@@ -147,11 +146,9 @@ namespace SmartAppDataAccess
         private ISearchResponse<SmartAppModels.Properties> GetSerializableSearchResponseForProperty(SearchInputParams searchParams){
 
             var marketsFilter = new List<Func<QueryContainerDescriptor<SmartAppModels.Properties>, QueryContainer>>();
+            //searchParams.Markets = new string[] {"abilene","amarillo"};
 
-            //marketsFilter.Add(fq => fq.Terms(t => t.Field( f => f.Property.Market).Terms(searchParams.Markets) ));
-            //marketsFilter.Add(f => f.Term(p => p.Property.Market, searchParams.Markets[0]));
-            if(searchParams.Markets.Any())
-                marketsFilter.Add(fq => fq.Terms(t => t.Field( f => f.Property.Market).Terms(searchParams.Markets) ));
+            marketsFilter.Add(fq => fq.Terms(t => t.Field( f => f.Property.Market).Terms(searchParams.Markets)));
 
             var searchResponse =  _elasticCnxNESTClient.Search<SmartAppModels.Properties>(s => s
                     .Index("property")
@@ -159,15 +156,18 @@ namespace SmartAppDataAccess
                     .From(0)
                     .Size(searchParams.Limit)
                     .Query(q => q
-                        .Bool(bq => bq
-                            .Must(mq => mq
-                                .Match(m => m
+                        .Bool(qb => qb.Filter(marketsFilter) ) && q
+                        .Bool(qb2 => qb2
+                            .Must( mq => mq
+                                .Match(m1 => m1
                                     .Field(f => f.Property.Name)
-                                    .Field(F => F.Property.FormerName)
                                     .Query(searchParams.SearchPhase)
+                                ) || mq 
+                                .Match(m2 => m2
+                                    .Field(f2 => f2.Property.FormerName)
+                                    .Query(searchParams.SearchPhase)                       
                                 )
-                            )
-                            .Filter(marketsFilter)
+                            )                            
                         )
                     )
                 );
@@ -188,14 +188,14 @@ namespace SmartAppDataAccess
                     .From(0)
                     .Size(searchParams.Limit)
                     .Query(q => q
-                        .Bool(bq => bq
-                            .Must(mq => mq
-                                .Match(m => m
+                        .Bool(qb => qb.Filter(marketsFilter) ) && q
+                        .Bool(qb2 => qb2
+                            .Must( mq => mq
+                                .Match(m1 => m1
                                     .Field(f => f.Mgmt.Name)
                                     .Query(searchParams.SearchPhase)
-                                )
+                                )            
                             )
-                            .Filter(marketsFilter)
                         )
                     )
                 );

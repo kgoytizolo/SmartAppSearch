@@ -1,0 +1,8 @@
+//Main localhost server (HTTP)
+http://localhost:5000
+
+//Main localhost server (HTTPS)
+https://localhost:5001
+
+//Swagger UI URL - Used to document your API with Swagger/Open API
+https://localhost:5001/swagger/v1/swagger.json

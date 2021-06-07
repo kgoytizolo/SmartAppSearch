@@ -2,6 +2,10 @@ using NUnit.Framework;
 using SmartAppModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Net;
+using RestSharp;
+using RestSharp.Authenticators;
+using RestSharp.Serialization.Json;
 
 namespace SmartAppUnitTests
 {
@@ -10,7 +14,73 @@ namespace SmartAppUnitTests
     {
         //Declare global variables here
         const string mainServiceUrl = "https://localhost:5001/api/smartSearch";
+        RestClient serviceClientSmartAppSearch;
 
+        [OneTimeSetUp]
+        public void Init()
+        {
+            serviceClientSmartAppSearch = new RestClient(mainServiceUrl);
+            serviceClientSmartAppSearch.Timeout = 9000;
+        }
+
+        [TestCase("stones and rocks", 20, new string[] {"Houston"}, ExpectedResult = true)]
+        [TestCase("stones & rocks", 20, new string[] {"Houston"}, ExpectedResult = true)]
+        [TestCase("<p>stones and rocks</p>", 20, new string[] {"Houston"}, ExpectedResult = true)]
+        [TestCase("<p>stones & rocks</p>", 20, new string[] {"Houston"}, ExpectedResult = true)]        
+        [TestCase("La frontera", 20, new string[] {"Austin"}, ExpectedResult = true)]        
+        [TestCase("La frontera district", 20, new string[] {"Austin"}, ExpectedResult = true)]                        
+        [TestCase("Villas of St. Moritz", 20, new string[] {"San Antonio"}, ExpectedResult = true)]                        
+        [TestCase("Villas of saint Moritz", 20, new string[] {"San Antonio"}, ExpectedResult = true)]                                
+        public bool GetSearchResultsForOneMarket_OK_Test(string searchPhrase, int limit, string[] markets)
+        {
+            return GetSearchResultsRestApi(searchPhrase, limit, markets);
+        }
+
+        [TestCase("stones and rocks", 20, new string[] {"Atlanta", "Houston"}, ExpectedResult = true)]
+        [TestCase("stones & rocks", 20, new string[] {"Atlanta", "Houston"}, ExpectedResult = true)]
+        [TestCase("<p>stones and rocks</p>", 20, new string[] {"Atlanta", "Houston"}, ExpectedResult = true)]
+        [TestCase("<p>stones & rocks</p>", 20, new string[] {"Atlanta", "Houston"}, ExpectedResult = true)]   
+        [TestCase("La frontera", 20, new string[] {"Austin", "Orange County"}, ExpectedResult = true)]        
+        [TestCase("La frontera district", 20, new string[] {"Austin", "Orange County"}, ExpectedResult = true)]                        
+        [TestCase("St. Moritz", 20, new string[] {"San Antonio", "San Francisco"}, ExpectedResult = true)]                        
+        [TestCase("saint Moritz", 20, new string[] {"San Antonio", "San Francisco"}, ExpectedResult = true)]
+        [Ignore("Just for now")] 
+        public bool GetSearchResultsForSeveralMarkets_OK_Test(string searchPhrase, int limit, string[] markets)
+        {
+            return GetSearchResultsRestApi(searchPhrase, limit, markets);
+        }
+
+        [TestCase("stones and rocks", 20, new string[] {}, ExpectedResult = true)]
+        [TestCase("stones & rocks", 20, new string[] {}, ExpectedResult = true)]
+        [TestCase("<p>stones and rocks</p>", 20, new string[] {}, ExpectedResult = true)]
+        [TestCase("<p>stones & rocks</p>", 20, new string[] {}, ExpectedResult = true)]   
+        [TestCase("La frontera", 20, new string[] {}, ExpectedResult = true)]        
+        [TestCase("La frontera district", 20, new string[] {}, ExpectedResult = true)]                        
+        [TestCase("St. Moritz", 20, new string[] {}, ExpectedResult = true)]                        
+        [TestCase("saint Moritz", 20, new string[] {}, ExpectedResult = true)]
+        [Ignore("Just for now")] 
+        public bool GetSearchResultsForAllMarkets_OK_Test(string searchPhrase, int limit, string[] markets)
+        {
+            return GetSearchResultsRestApi(searchPhrase, limit, markets);
+        }     
+
+        /// <summary>
+        /// Evaluates if the REST API evaluates in case of the required input value is null or empty.
+        /// Response returned should be 400 - Bad request
+        /// </summary>
+        [Ignore("Just for now")] 
+        [Test]
+        public void EvaluateInputRequiredSearchParam_Test()
+        {
+            var request = new RestRequest(Method.GET);
+            var requestParams = new SearchInputParams(){SearchPhase = "", Limit = 15, Markets = new string[] {}};
+            request.AddJsonBody(requestParams);
+            var response = serviceClientSmartAppSearch.Execute(request);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.Pass();
+        }
+
+        [Ignore("Just mock")]
         [Test]
         public async Task GetSearchResultsForAllUSATestOK()
         {
@@ -19,10 +89,15 @@ namespace SmartAppUnitTests
             Assert.IsTrue(serviceResponse != null);
         }
 
-        [SetUp]
-        public void Setup()
+        //************ Private methods ******************************
+        private bool GetSearchResultsRestApi(string searchPhrase, int limit, string[] markets)
         {
-        }
+            var request = new RestRequest(Method.GET);
+            var requestParams = new SearchInputParams(){SearchPhase = searchPhrase, Limit = limit, Markets = markets};
+            request.AddJsonBody(requestParams);
+            var response = serviceClientSmartAppSearch.Execute(request);
+            return (response.StatusCode == HttpStatusCode.OK && response.ContentType.StartsWith("application/json"));
+        }        
 
         //************ Temporary Search Results (Mock) **************
         private Task<SearchedItems> GetSearchResults(string request)  
