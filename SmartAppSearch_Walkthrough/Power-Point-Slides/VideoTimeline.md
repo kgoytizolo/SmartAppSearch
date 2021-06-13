@@ -1,0 +1,11 @@
+# This video has been divided in 10 parts:
+- Slide 1 (00:00:00): Introduction
+- Slide 2 (00:00:26): Overview
+- Slide 3 (00:01:05): Software user requirements (inputs)
+- Slide 4 (00:03:21): Software user requirements (output)
+- Slide 5 (00:04:12): Software technical requirements
+- Slide 6 (00:05:30): Getting started
+- Slide 7 (00:11:51): Applying Elasticsearch best practices for full text search
+- Slide 8 (00:20:44): REST API architecture and usage of Elasticsearch NEST framework
+- Slide 9 (00:51:47): Calling the REST API to test several full text search scenarios
+- Slide 10 (01:02:00): Thank you!  
