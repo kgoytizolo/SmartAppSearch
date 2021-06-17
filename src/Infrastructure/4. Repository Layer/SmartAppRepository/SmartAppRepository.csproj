@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Core\0. Models\SmartAppModels\SmartAppModels.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Core\1. Application\SmartAppCore\SmartAppCore.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Core\2. Complementary components\GenericErrorHandler\GenericErrorHandler.csproj" />    
+    <ProjectReference Include="..\..\..\..\src\Infrastructure\3. Data Access Layer\SmartAppDataAccess\SmartAppDataAccess.csproj"/>
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0"/>
+  </ItemGroup>
+</Project>

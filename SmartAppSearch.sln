@@ -5,27 +5,27 @@ VisualStudioVersion = 16.6.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. Models", "0. Models", "{BC6309F1-5C66-4734-9C57-D4927E5F0735}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAppModels", "0. Models\SmartAppModels\SmartAppModels.csproj", "{24C952B3-DC7E-4529-AFD0-245A18F8D792}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAppModels", "src\Core\0. Models\SmartAppModels\SmartAppModels.csproj", "{24C952B3-DC7E-4529-AFD0-245A18F8D792}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Service Layer - Host (REST APIs)", "4. Service Layer - Host (REST APIs)", "{B7FECE7E-F5E3-4C30-95FB-2424EA1E109B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Service Layer - Host (REST APIs)", "5. Service Layer - Host (REST APIs)", "{B7FECE7E-F5E3-4C30-95FB-2424EA1E109B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAppService", "4. Service Layer - Host (REST APIs)\SmartAppService\SmartAppService.csproj", "{3D534E86-2CFA-4E87-962D-C946F4F56E91}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAppService", "src\Service API\5. Service Layer - Host (REST APIs)\SmartAppService\SmartAppService.csproj", "{3D534E86-2CFA-4E87-962D-C946F4F56E91}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Repository Layer", "3. Repository Layer", "{87D4D83A-993B-4826-B478-129768D4C4BF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Repository Layer", "4. Repository Layer", "{87D4D83A-993B-4826-B478-129768D4C4BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAppRepository", "3. Repository Layer\SmartAppRepository\SmartAppRepository.csproj", "{725A4B0C-2F7E-498F-AA43-030EBC15D5D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAppRepository", "src\Infrastructure\4. Repository Layer\SmartAppRepository\SmartAppRepository.csproj", "{725A4B0C-2F7E-498F-AA43-030EBC15D5D2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Data Access Layer", "2. Data Access Layer", "{3F273EFC-456D-46EE-9F76-B76D39A00AC4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Data Access Layer", "3. Data Access Layer", "{3F273EFC-456D-46EE-9F76-B76D39A00AC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAppDataAccess", "2. Data Access Layer\SmartAppDataAccess\SmartAppDataAccess.csproj", "{BF61A367-BD90-4F8E-ADF4-1D1B8560FFFA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAppDataAccess", "src\Infrastructure\3. Data Access Layer\SmartAppDataAccess\SmartAppDataAccess.csproj", "{BF61A367-BD90-4F8E-ADF4-1D1B8560FFFA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6. Unit Tests", "6. Unit Tests", "{7D3F2645-ABB0-4BDC-9C6C-B6CA2B1DA87B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAppUnitTests", "6. Unit Tests\SmartAppUnitTests\SmartAppUnitTests.csproj", "{0976C5C3-07A7-4928-B3B2-D0AE01488EC2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAppUnitTests", "test\6. Unit Tests\SmartAppUnitTests\SmartAppUnitTests.csproj", "{0976C5C3-07A7-4928-B3B2-D0AE01488EC2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Complementary components", "1. Complementary components", "{11658614-8BAA-45BC-B3C5-4D29E74986F9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Complementary components", "2. Complementary components", "{11658614-8BAA-45BC-B3C5-4D29E74986F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericErrorHandler", "1. Complementary components\GenericErrorHandler\GenericErrorHandler.csproj", "{7D5E4F92-0E12-4D82-8F6E-BE2A3E659DB3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericErrorHandler", "src\Core\2. Complementary components\GenericErrorHandler\GenericErrorHandler.csproj", "{7D5E4F92-0E12-4D82-8F6E-BE2A3E659DB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
