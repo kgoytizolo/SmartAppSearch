@@ -1,12 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using SmartAppModels;
 using SmartAppService.Models;
-using SmartAppService.Interfaces;
-using SmartAppCore.Interfaces.Repository;
 using SmartAppCore.Features.Searchs.GetSearchResults;
+using MediatR;
 using GenericErrorHandler;
+using Microsoft.Extensions.Logging;
 
 namespace SmartAppService.Controllers
 {
@@ -14,17 +12,13 @@ namespace SmartAppService.Controllers
     [Route("api/smartSearch")]
     public class SearchController : ControllerBase
     {
+        private readonly IMediator _searchMediator;
         private readonly ILogger<SearchController> _logger;
-        private readonly ISearchValidator _searchValidator;
-        private readonly ISearchRepository _searchRepository;
-        static readonly string[] serviceScope = new string[] {"access_as_user"};
 
-        public SearchController(ILogger<SearchController> logger, ISearchValidator searchValidator, 
-                                    ISearchRepository searchRepository)
+        public SearchController(ILogger<SearchController> logger, IMediator searchMediator)
         {
             _logger = logger;
-            _searchValidator = searchValidator;
-            _searchRepository = searchRepository;
+            _searchMediator = searchMediator;
         }
 
         /// <summary>
@@ -37,33 +31,30 @@ namespace SmartAppService.Controllers
         /// {market: string[]}      (Optional - If there's not data retrieved, searchs through all USA)
         /// <returns></returns>
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(SearchedItems))]
+        [ProducesResponseType(200, Type = typeof(Response<SearchedItemsViewModels>))]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]    
         public async Task<IActionResult> Get([FromQuery] SearchInputParams searchParams)
         {
-            var serviceResponse = new Response<SearchedItems>();
+            var serviceResponse = new Response<SearchedItemsViewModels>();
             try{
-                _logger.LogInformation("Entering into managements and/or properties search..");
-                (bool isValidationOk, string validationMessage) validationResult = _searchValidator.Validate<SearchInputParams>(searchParams);
-                if(validationResult.isValidationOk){
-                    serviceResponse = await _searchRepository.GetResultsFromSearchWithResponse(searchParams.SearchPhase,
-                                                                                               searchParams.Limit,
-                                                                                               searchParams.Markets);
-                    if(serviceResponse.ErrorId == 9404)         return NotFound(serviceResponse);  //Resource not found - 404
-                    else if(serviceResponse.ErrorId == 9999 || serviceResponse.ErrorId == 9000)    
-                            return StatusCode(500, serviceResponse);                               //Internal Service Error - 500
-                    else return Ok(serviceResponse.ResponseItem);                                  //Response OK - 200
-                }
-                else {
-                    serviceResponse.SetErrorInfo(9400, validationResult.validationMessage);
-                    return BadRequest(serviceResponse);                                             //Bad request - 400
-                }
+                var serviceRequest = new GetSearchResultsQuery() { SearchPhrase = searchParams.SearchPhase, Limit = searchParams.Limit, Markets = searchParams.Markets };
+                serviceResponse = await _searchMediator.Send(serviceRequest);
+                switch (true) {
+                    case true when serviceResponse.ErrorId == 0 && serviceResponse.Success: return Ok(serviceResponse);
+                    case true when serviceResponse.ErrorId == 9400: return BadRequest(serviceResponse);
+                    case true when serviceResponse.ErrorId == 9404: return NotFound(serviceResponse);
+                    case true when (serviceResponse.ErrorId == 9000 || serviceResponse.ErrorId == 9999):                                            
+                    default : 
+                        if(serviceResponse.ErrorId != 9000 && serviceResponse.ErrorId != 9999) serviceResponse.SetErrorInfo(1000, "Unexpected error during the call of this service. Please, try again");
+                        return StatusCode(500, serviceResponse); 
+                };                               
             }
             catch(System.Exception e){
-                serviceResponse.SetErrorInfo(e.HResult, "Error during the call of this service. Please, try again");
-                return StatusCode(500, serviceResponse);                                            //Internal Service Error - 500
+                _logger.LogError($"Internal Service Error - Code: {e.HResult}, Message: {e.Message}");
+                serviceResponse.SetErrorInfo(10000, "Error during the call of this service. Please, try again");
+                return StatusCode(500, serviceResponse); 
             }
         }
 

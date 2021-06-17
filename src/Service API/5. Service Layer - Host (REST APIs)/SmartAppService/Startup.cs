@@ -4,12 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using SmartAppService.Interfaces;
-using SmartAppService.Validations;
-using SmartAppRepository;
-using SmartAppCore.Interfaces.Repository;
-using SmartAppDataAccess;
-using SmartAppCore.Interfaces.Persistence;
 using SmartAppDataAccess.DBConnectionSettings;
 using SmartAppRepository.Registration;
 using SmartAppDataAccess.Registration;
@@ -36,9 +30,6 @@ namespace SmartAppService
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SmartAppService", Version = "v1" });
             });
             //************ Customized DI ****************
-            //services.AddScoped<ISearchValidator, SearchValidator>();
-            //services.AddScoped<ISearchRepository, SearchRepository>();
-            //services.AddScoped<INoSQLSearchDataAccess, NoSQLSearchDataAccess>();
             services.AddCoreServices();
             services.AddRepositoryServices();
             services.AddDataAccessServices(Configuration);

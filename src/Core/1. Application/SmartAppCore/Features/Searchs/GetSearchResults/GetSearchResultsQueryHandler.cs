@@ -26,7 +26,7 @@ namespace SmartAppCore.Features.Searchs.GetSearchResults
             var validatorResult = await requestValidator.ValidateAsync(request);
 
             if(validatorResult.Errors.Count > 0){
-                if(validatorResult.Errors.Exists(x => x.ErrorCode.Equals("1400"))){
+                if(validatorResult.Errors.Exists(x => x.ErrorCode.Equals("9400"))){
                     response.SetErrorInfo(9400, "Search phrase is required", "");
                 }                
                 if(validatorResult.Errors.Exists(x => x.ErrorCode.Equals("1400"))){
@@ -35,9 +35,6 @@ namespace SmartAppCore.Features.Searchs.GetSearchResults
             }
 
             if(response.Success){
-                var propertyForApi = new List<PropertyDto>();
-                var managementForApi = new List<ManagementDto>();
-                var searchForApi = new SearchedItemsViewModels();
                 var searchResults = await _searchRepository.GetResultsFromSearchWithResponse(request.SearchPhrase, 
                                                                                             request.Limit,
                                                                                             request.Markets);
